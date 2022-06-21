@@ -8,6 +8,15 @@ website: https://github.com/LifelessNerd
 commands:
   playtime:
     description: Gets the playtime of the provided player.
-    usage: /<command> <player>
+    usage: /<command> <player> <days/hours/minutes/seconds/ticks/standard>
     aliases:
       - getplaytime
+      - pltm
+      - plt
+  playtimescoreboard:
+    description: Shows a the scoreboard for playtime rankings.
+    usage: /<command> <show/hide>
+    aliases:
+      - pltsb
+      - pltmsb
+      - playtimerankings

@@ -1,0 +1,5 @@
+# DATABASE FILE FOR PLAYTIMES
+# Editing will have no effect, since playtime stats are pulled from the Spigot API embedded in your server
+# Formatting is as follows:
+# PlayerName: value in ticks
+# Example: 7200
