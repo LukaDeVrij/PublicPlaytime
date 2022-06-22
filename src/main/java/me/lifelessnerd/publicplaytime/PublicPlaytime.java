@@ -1,11 +1,12 @@
 package me.lifelessnerd.publicplaytime;
 
 import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
+import me.lifelessnerd.publicplaytime.commands.ShowRankings;
 import me.lifelessnerd.publicplaytime.commands.ShowScoreboard;
-import org.bukkit.Bukkit;
+import me.lifelessnerd.publicplaytime.eventhandlers.PlaytimeHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Level;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public final class PublicPlaytime extends JavaPlugin {
@@ -28,9 +29,20 @@ public final class PublicPlaytime extends JavaPlugin {
         getCommand("playtime").setTabCompleter(new GetPlaytime());
         getCommand("playtimescoreboard").setExecutor(new ShowScoreboard());
         getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard());
+        getCommand("playtimeranking").setExecutor(new ShowRankings());
+        getCommand("playtimeranking").setTabCompleter(new ShowRankings());
+
 
         //Database initializer
         PlaytimeDatabase.setup();
+        ArrayList<String> headerComment = new ArrayList<String>();
+        headerComment.add("# DATABASE FILE FOR PLAYTIMES\n");
+        headerComment.add("# Editing will have no effect, since playtime stats are pulled from the Spigot API embedded in your server\n");
+        headerComment.add("# Formatting is as follows:\n");
+        headerComment.add("# PlayerName: value in ticks\n");
+        headerComment.add("# Example: 7200\n");
+
+        PlaytimeDatabase.get().options().setHeader(headerComment);
         PlaytimeDatabase.get().options().copyDefaults(true);
         PlaytimeDatabase.save();
 

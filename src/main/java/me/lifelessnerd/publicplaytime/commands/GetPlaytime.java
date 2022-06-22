@@ -55,7 +55,6 @@ public class GetPlaytime implements TabExecutor {
         // Will not produce nullPointer, if player is online he will always have a score in this category
         String playTime = calculateTimeSpan(score, args, sender);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"[&bPublicPlaytime&r] &6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
-
         return true;
     }
 

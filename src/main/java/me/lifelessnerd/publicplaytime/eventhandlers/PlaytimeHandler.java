@@ -1,5 +1,6 @@
-package me.lifelessnerd.publicplaytime;
+package me.lifelessnerd.publicplaytime.eventhandlers;
 
+import me.lifelessnerd.publicplaytime.PlaytimeDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,6 +34,7 @@ public class PlaytimeHandler implements Listener {
 
     }
 
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent playerQuitEvent){
 
         Player player = playerQuitEvent.getPlayer();

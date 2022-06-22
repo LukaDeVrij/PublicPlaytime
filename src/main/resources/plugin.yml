@@ -19,4 +19,10 @@ commands:
     aliases:
       - pltsb
       - pltmsb
-      - playtimerankings
+  playtimeranking:
+    description: Shows the rankings for playtime in chat.
+    usage: /<command> <length>
+    aliases:
+      - pltr
+      - pltmr
+

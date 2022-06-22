@@ -1,5 +1,6 @@
 package me.lifelessnerd.publicplaytime.commands;
 
+import me.lifelessnerd.publicplaytime.PlaytimeRanking;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
@@ -11,6 +12,8 @@ import org.bukkit.scoreboard.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class ShowScoreboard implements TabExecutor {
@@ -49,11 +52,12 @@ public class ShowScoreboard implements TabExecutor {
             return true;
         }
         else if(args[0].equalsIgnoreCase("hide")){
-            //Disable scoreboard
+
+            playtimeRankings.unregister();
+            return true;
         }
 
-
-
+        return false;
     }
 
     @Override
