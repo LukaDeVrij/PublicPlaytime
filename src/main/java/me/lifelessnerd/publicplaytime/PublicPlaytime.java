@@ -4,6 +4,8 @@ import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
 import me.lifelessnerd.publicplaytime.commands.ShowRankings;
 import me.lifelessnerd.publicplaytime.commands.ShowScoreboard;
 import me.lifelessnerd.publicplaytime.eventhandlers.PlaytimeHandler;
+import me.lifelessnerd.publicplaytime.filehandlers.Config;
+import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -27,8 +29,8 @@ public final class PublicPlaytime extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlaytimeHandler(), this);
         getCommand("playtime").setExecutor(new GetPlaytime());
         getCommand("playtime").setTabCompleter(new GetPlaytime());
-        getCommand("playtimescoreboard").setExecutor(new ShowScoreboard());
-        getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard());
+        getCommand("playtimescoreboard").setExecutor(new ShowScoreboard(this));
+        getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard(this));
         getCommand("playtimeranking").setExecutor(new ShowRankings());
         getCommand("playtimeranking").setTabCompleter(new ShowRankings());
 
@@ -45,6 +47,10 @@ public final class PublicPlaytime extends JavaPlugin {
         PlaytimeDatabase.get().options().setHeader(headerComment);
         PlaytimeDatabase.get().options().copyDefaults(true);
         PlaytimeDatabase.save();
+
+        //Config
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
 
     }
 

@@ -1,18 +1,14 @@
 package me.lifelessnerd.publicplaytime;
 
-import me.lifelessnerd.publicplaytime.PlaytimeDatabase;
+import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class PlaytimeRanking {
 
@@ -40,7 +36,7 @@ public class PlaytimeRanking {
         return playerNames;
     }
 
-    public HashMap<String, String> getRanking(Set<String> playerNames, int maxAmount){
+    public HashMap<String, String> getRanking(Set<String> playerNames, int maxAmount, String outputMode){
 
         FileConfiguration fileConfiguration = PlaytimeDatabase.get();
         GetPlaytime getPlaytimeObject = new GetPlaytime();
@@ -85,7 +81,7 @@ public class PlaytimeRanking {
         rankingInts = sortByValue(rankingInts);
 
         // Now we slice the array based on maxAmount & Go from int to String
-        HashMap<String, String> slicedRankingInts = new LinkedHashMap<String, String>();
+        HashMap<String, String> slicedRankingStrings = new LinkedHashMap<String, String>();
 
         int i = 0;
         for (String key : rankingInts.keySet()) {
@@ -99,15 +95,34 @@ public class PlaytimeRanking {
                 long MM = playTime.toMinutesPart();
                 long SS = playTime.toSecondsPart();
 
-                String value = String.format("%s days, %s hours, %s minutes & %s seconds",DD,HH,MM,SS);
+                String output = "";
+                switch(outputMode){
+                    default:
+                        output = String.format("%s days, %s hours, %s minutes & %s seconds",DD,HH,MM,SS);
+                        break;
+                    case "seconds":
+                        output = seconds + " seconds";
+                        break;
+                    case "minutes":
+                        output = playTime.toMinutes() + " minutes";
+                        break;
+                    case "hours":
+                        output = playTime.toHours() + " hours";
+                        break;
+                    case "days":
+                        output = playTime.toDays() + " days";
+                        break;
+                    case "ticks":
+                        output = playTime.toSeconds() * 20 + " ticks";
+                }
 
-                slicedRankingInts.put(key, value);
+                slicedRankingStrings.put(key, output);
 
                 i++;
             }
         }
 
-        return slicedRankingInts;
+        return slicedRankingStrings;
     }
 
     // function to sort hashmap by values by GeeksForGeeks

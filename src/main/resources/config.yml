@@ -1,1 +1,5 @@
-config: 'yes'
+# Whether scoreboard refresh automatically when using /playtimescoreboard
+scoreboardRefreshAllowed: true
+# If scoreboardRefreshAllowed is true, the interval at which the scoreboard will refresh, in ticks (20 ticks = 1 second)
+# I would recommend not setting this too low, as it affects performance
+scoreboardRefreshInterval: 1200

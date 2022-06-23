@@ -27,18 +27,30 @@ public class ShowRankings implements TabExecutor {
             return false;
         }
 
-        if (args.length < 1){
+        if (args.length < 2){
             maxAmount = 10;
         }
         else {
-            maxAmount = Integer.parseInt(args[0]);
+            try{
+                maxAmount = Integer.parseInt(args[1]);
+            }catch(Exception ex){
+                maxAmount = 10;
+            }
+        }
+
+        String outputMode = "standard";
+        try{
+            outputMode = args[0];
+        }catch(Exception exception){
+            outputMode = "standard";
         }
         Player player = (Player) sender;
 
         PlaytimeRanking ranking = new PlaytimeRanking();
         HashSet<String> playerList = ranking.getPlayerNames();
-        HashMap<String, String> rankedList = ranking.getRanking(playerList, maxAmount);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "[&bPublicPlaytime&r] &bPlaytime Leaderboard Ranking" + "&7 (max " + maxAmount + ")"));
+        HashMap<String, String> rankedList = ranking.getRanking(playerList, maxAmount, outputMode);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bPlaytime Leaderboard Ranking" + "&7 (max " + maxAmount + ")" +
+                " (Output Mode: " + outputMode + ")"));
         for (String playerName : rankedList.keySet()){
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&o" + playerName + "&r -&c " + rankedList.get(playerName)));
         }
@@ -53,11 +65,22 @@ public class ShowRankings implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if (args.length == 1){
+        if (args.length == 2){
             List<String> arguments = new ArrayList<>();
             arguments.add("5");
             arguments.add("20");
             arguments.add("100");
+            return arguments;
+        }
+
+        if (args.length == 1){
+            List<String> arguments = new ArrayList<>();
+            arguments.add("standard");
+            arguments.add("days");
+            arguments.add("hours");
+            arguments.add("minutes");
+            arguments.add("seconds");
+            arguments.add("ticks");
             return arguments;
         }
 

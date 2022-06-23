@@ -3,7 +3,7 @@ version: '${project.version}'
 main: me.lifelessnerd.publicplaytime.PublicPlaytime
 api-version: 1.19
 authors: [ LifelessNerd ]
-description: Keeps player playtime neat and public, can be requested in a number of ways in-game
+description: Keeps player playtime neat and public, can be shown in a number of ways in-game
 website: https://github.com/LifelessNerd
 commands:
   playtime:
@@ -14,14 +14,14 @@ commands:
       - pltm
       - plt
   playtimescoreboard:
-    description: Shows a the scoreboard for playtime rankings.
-    usage: /<command> <show/hide>
+    description: Shows the sidebar scoreboard for playtime rankings.
+    usage: /<command> <show/hide> <days/hours/minutes/seconds/ticks> <maxEntries>
     aliases:
       - pltsb
       - pltmsb
   playtimeranking:
     description: Shows the rankings for playtime in chat.
-    usage: /<command> <length>
+    usage: /<command> <days/hours/minutes/seconds/ticks/standard> <maxEntries>
     aliases:
       - pltr
       - pltmr

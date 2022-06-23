@@ -1,6 +1,6 @@
 package me.lifelessnerd.publicplaytime.commands;
 
-import me.lifelessnerd.publicplaytime.PlaytimeDatabase;
+import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
@@ -40,11 +40,11 @@ public class GetPlaytime implements TabExecutor {
                 int value = Integer.parseInt(PlaytimeDatabase.get().getString(argument));
                 //Keeping this in here to make try catch work
                 String playTime = calculateTimeSpan(value, args, sender);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"[&bPublicPlaytime&r] &6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
                 return true;
                 // If this fails, i.e. player is not in database, we give up
             }catch(Exception exception2){
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "[&bPublicPlaytime&r] &cPlayer has never visited this server."));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cPlayer has never visited this server."));
                 return true;
             }
 
@@ -54,7 +54,7 @@ public class GetPlaytime implements TabExecutor {
         int score = argumentPlayer.getStatistic(Statistic.PLAY_ONE_MINUTE);
         // Will not produce nullPointer, if player is online he will always have a score in this category
         String playTime = calculateTimeSpan(score, args, sender);
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"[&bPublicPlaytime&r] &6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
         return true;
     }
 

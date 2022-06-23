@@ -1,4 +1,4 @@
-package me.lifelessnerd.publicplaytime;
+package me.lifelessnerd.publicplaytime.filehandlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,39 +7,38 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class PlaytimeDatabase {
+public class Config {
 
     private static File file;
     private static FileConfiguration customFile;
 
     //Finds or generates the custom config file
-    public static void setup() {
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("PublicPlaytime").getDataFolder(), "database.yml");
+    public static void setup(){
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("PublicPlaytime").getDataFolder(), "config.yml");
 
-        if (!file.exists()) {
-            try {
+        if (!file.exists()){
+            try{
                 file.createNewFile();
-
-            } catch (IOException e) {
-                //oww
+            }catch (IOException e){
+                //owww
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 
-    public static FileConfiguration get() {
+    public static FileConfiguration get(){
         return customFile;
     }
 
-    public static void save() {
-        try {
+    public static void save(){
+        try{
             customFile.save(file);
-        } catch (IOException e) {
+        }catch (IOException e){
             System.out.println("Couldn't save file");
         }
     }
 
-    public static void reload() {
+    public static void reload(){
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 

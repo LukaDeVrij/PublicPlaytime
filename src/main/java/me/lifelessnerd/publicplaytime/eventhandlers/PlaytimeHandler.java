@@ -1,6 +1,6 @@
 package me.lifelessnerd.publicplaytime.eventhandlers;
 
-import me.lifelessnerd.publicplaytime.PlaytimeDatabase;
+import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,10 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.logging.Level;
 
 public class PlaytimeHandler implements Listener {
 
