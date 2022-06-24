@@ -44,3 +44,8 @@ The database is not to be edited. It stores playtimes as ticks per player. You c
 ## Upcoming feature(s) (hopefully) 
 - Tidying up of the commands, with all commands under one super-command, with _get_, _ranking_ & _scoreboard_ as subcommands.
 - Ways to carry over data from old worlds to new worlds
+
+## Known issues
+Currently no known issues.
+
+If there are any problems, create a message below, or add them on GitHub, here.
