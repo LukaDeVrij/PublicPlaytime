@@ -1,10 +1,10 @@
 package me.lifelessnerd.publicplaytime;
 
+import me.lifelessnerd.publicplaytime.commands.CommandManager;
 import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
 import me.lifelessnerd.publicplaytime.commands.ShowRankings;
 import me.lifelessnerd.publicplaytime.commands.ShowScoreboard;
 import me.lifelessnerd.publicplaytime.eventhandlers.PlaytimeHandler;
-import me.lifelessnerd.publicplaytime.filehandlers.Config;
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,12 +27,14 @@ public final class PublicPlaytime extends JavaPlugin {
         log = getLogger();
         log.info("PublicPlaytime plugin started!");
         getServer().getPluginManager().registerEvents(new PlaytimeHandler(), this);
-        getCommand("playtime").setExecutor(new GetPlaytime());
-        getCommand("playtime").setTabCompleter(new GetPlaytime());
+        getCommand("getplaytime").setExecutor(new GetPlaytime());
+        getCommand("getplaytime").setTabCompleter(new GetPlaytime());
         getCommand("playtimescoreboard").setExecutor(new ShowScoreboard(this));
         getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard(this));
         getCommand("playtimeranking").setExecutor(new ShowRankings());
         getCommand("playtimeranking").setTabCompleter(new ShowRankings());
+
+        getCommand("playtime").setExecutor(new CommandManager());
 
 
         //Database initializer

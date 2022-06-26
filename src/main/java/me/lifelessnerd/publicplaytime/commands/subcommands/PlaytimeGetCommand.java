@@ -1,28 +1,33 @@
-package me.lifelessnerd.publicplaytime.commands;
+package me.lifelessnerd.publicplaytime.commands.subcommands;
 
+import me.lifelessnerd.publicplaytime.commands.Subcommand;
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
-public class GetPlaytime implements TabExecutor {
-    /**
-     * This class does the initial things regarding the /playtime command.
-     *
-     */
+public class PlaytimeGetCommand extends Subcommand {
+    @Override
+    public String getName() {
+        return "get";
+    }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public String getDescription() {
+        return "Gets the playtime of the provided player.";
+    }
+
+    @Override
+    public String getSyntax() {
+        return "/playtime get <player> <days/hours/minutes/seconds/ticks/standard>";
+    }
+
+    @Override
+    public boolean perform(Player sender, String[] args) {
 
 
         if(args.length < 1){
@@ -30,24 +35,28 @@ public class GetPlaytime implements TabExecutor {
             return false;
         }
 
-        String argument = args[0];
+        String argument = args[1];
         Player argumentPlayer = null;
         try {
             // Try and get the player out of the online pool of players
             argumentPlayer = Bukkit.getServer().getPlayerExact(argument);
             String name = argumentPlayer.getName();
+            sender.sendMessage(name);
 
         }catch(Exception exception){
             // If we're in here that means the player is not online
             // We try to get the data from the database
+            sender.sendMessage(exception.toString());
             try {
                 int value = Integer.parseInt(PlaytimeDatabase.get().getString(argument));
                 //Keeping this in here to make try catch work
                 String playTime = calculateTimeSpan(value, args, sender);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
+                sender.sendMessage("debug");
                 return true;
                 // If this fails, i.e. player is not in database, we give up
             }catch(Exception exception2){
+                sender.sendMessage(exception2.toString());
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cPlayer has never visited this server."));
                 return true;
             }
@@ -60,12 +69,15 @@ public class GetPlaytime implements TabExecutor {
         String playTime = calculateTimeSpan(score, args, sender);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
         return true;
+
+
+
     }
 
     public String calculateTimeSpan(int value, String[] args, CommandSender sender){
         String outputMode;
         try{
-            outputMode = args[1];
+            outputMode = args[2];
         }catch(Exception exception){
             outputMode = "standard";
         }
@@ -100,20 +112,4 @@ public class GetPlaytime implements TabExecutor {
         return output;
     }
 
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-        if (args.length == 2){
-            List<String> arguments = new ArrayList<>();
-            arguments.add("standard");
-            arguments.add("days");
-            arguments.add("hours");
-            arguments.add("minutes");
-            arguments.add("seconds");
-            arguments.add("ticks");
-            return arguments;
-        }
-
-        return null;
-    }
 }
