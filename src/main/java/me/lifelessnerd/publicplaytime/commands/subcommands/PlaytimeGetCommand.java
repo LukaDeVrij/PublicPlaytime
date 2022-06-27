@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
+import java.util.Arrays;
 
 public class PlaytimeGetCommand extends Subcommand {
     @Override
@@ -30,8 +31,9 @@ public class PlaytimeGetCommand extends Subcommand {
     public boolean perform(Player sender, String[] args) {
 
 
-        if(args.length < 1){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "[&bPublicPlaytime&r] &cNo arguments given."));
+        if(args.length < 2){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cPlease provide an argument!"));
+            sender.sendMessage(getSyntax());
             return false;
         }
 
@@ -41,22 +43,18 @@ public class PlaytimeGetCommand extends Subcommand {
             // Try and get the player out of the online pool of players
             argumentPlayer = Bukkit.getServer().getPlayerExact(argument);
             String name = argumentPlayer.getName();
-            sender.sendMessage(name);
 
         }catch(Exception exception){
             // If we're in here that means the player is not online
             // We try to get the data from the database
-            sender.sendMessage(exception.toString());
             try {
                 int value = Integer.parseInt(PlaytimeDatabase.get().getString(argument));
                 //Keeping this in here to make try catch work
                 String playTime = calculateTimeSpan(value, args, sender);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Player &o" + argument + "&r&6 has played &c" + playTime + "&6!"));
-                sender.sendMessage("debug");
                 return true;
                 // If this fails, i.e. player is not in database, we give up
             }catch(Exception exception2){
-                sender.sendMessage(exception2.toString());
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cPlayer has never visited this server."));
                 return true;
             }

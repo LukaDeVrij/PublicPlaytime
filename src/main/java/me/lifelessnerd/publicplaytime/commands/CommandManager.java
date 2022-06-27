@@ -1,6 +1,7 @@
 package me.lifelessnerd.publicplaytime.commands;
 
-import me.lifelessnerd.publicplaytime.commands.subcommands.PlaytimeGetCommand;
+import me.lifelessnerd.publicplaytime.PublicPlaytime;
+import me.lifelessnerd.publicplaytime.commands.subcommands.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -15,8 +16,12 @@ public class CommandManager implements TabExecutor {
 
     ArrayList<Subcommand> subcommands = new ArrayList<>();
 
-    public CommandManager(){
+    public CommandManager(PublicPlaytime plugin){
         subcommands.add(new PlaytimeGetCommand());
+        subcommands.add(new PlaytimeRankingCommand());
+        subcommands.add(new PlaytimeScoreboardCommand(plugin));
+        subcommands.add(new PlaytimeHelpCommand(subcommands, plugin));
+        subcommands.add(new PlaytimeAboutCommand(plugin));
     }
 
     @Override
@@ -36,15 +41,13 @@ public class CommandManager implements TabExecutor {
 
             if (args[0].equalsIgnoreCase(getSubcommands().get(i).getName())){
                 boolean result = getSubcommands().get(i).perform(player, args);
-            }
-            else {
-                player.sendMessage("Not a valid argument."); //TODO: Add all options in a message same as above
+                return true; // All help dialogs are done in-class with player.sendMessage
             }
 
         }
+        player.sendMessage(args[0] + " is not a valid sub-command."); //TODO: Add all options in a message same as above
+        return false;
 
-
-        return true;
     }
 
     public ArrayList<Subcommand> getSubcommands(){
@@ -56,9 +59,9 @@ public class CommandManager implements TabExecutor {
 
         if (args.length == 1){
             List<String> arguments = new ArrayList<>();
-            arguments.add("get");
-            arguments.add("scoreboard");
-            arguments.add("ranking");
+            for (int i = 0; i < getSubcommands().size(); i++){
+                arguments.add(getSubcommands().get(i).getName());
+            }
             return arguments;
         }
 
@@ -104,7 +107,7 @@ public class CommandManager implements TabExecutor {
                 arguments.add("hide");
                 return arguments;
             }
-            if (args.length == 3){
+            if (args.length == 3 && args[1].equalsIgnoreCase("show")){
                 List<String> arguments = new ArrayList<>();
                 arguments.add("days");
                 arguments.add("hours");
@@ -113,7 +116,7 @@ public class CommandManager implements TabExecutor {
                 arguments.add("ticks");
                 return arguments;
             }
-            if (args.length == 4){
+            if (args.length == 4 && args[1].equalsIgnoreCase("show")){
                 List<String> arguments = new ArrayList<>();
                 arguments.add("5");
                 arguments.add("10");

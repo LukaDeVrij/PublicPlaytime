@@ -27,14 +27,14 @@ public final class PublicPlaytime extends JavaPlugin {
         log = getLogger();
         log.info("PublicPlaytime plugin started!");
         getServer().getPluginManager().registerEvents(new PlaytimeHandler(), this);
-        getCommand("getplaytime").setExecutor(new GetPlaytime());
-        getCommand("getplaytime").setTabCompleter(new GetPlaytime());
-        getCommand("playtimescoreboard").setExecutor(new ShowScoreboard(this));
-        getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard(this));
-        getCommand("playtimeranking").setExecutor(new ShowRankings());
-        getCommand("playtimeranking").setTabCompleter(new ShowRankings());
+//        getCommand("getplaytime").setExecutor(new GetPlaytime());
+//        getCommand("getplaytime").setTabCompleter(new GetPlaytime());
+//        getCommand("playtimescoreboard").setExecutor(new ShowScoreboard(this));
+//        getCommand("playtimescoreboard").setTabCompleter(new ShowScoreboard(this));
+//        getCommand("playtimeranking").setExecutor(new ShowRankings());
+//        getCommand("playtimeranking").setTabCompleter(new ShowRankings());
 
-        getCommand("playtime").setExecutor(new CommandManager());
+        getCommand("playtime").setExecutor(new CommandManager(this));
 
 
         //Database initializer
