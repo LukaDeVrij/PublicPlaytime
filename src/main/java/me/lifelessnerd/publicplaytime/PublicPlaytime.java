@@ -1,11 +1,9 @@
 package me.lifelessnerd.publicplaytime;
 
 import me.lifelessnerd.publicplaytime.commands.CommandManager;
-import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
-import me.lifelessnerd.publicplaytime.commands.ShowRankings;
-import me.lifelessnerd.publicplaytime.commands.ShowScoreboard;
 import me.lifelessnerd.publicplaytime.eventhandlers.PlaytimeHandler;
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
+import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabaseBackup;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -49,6 +47,14 @@ public final class PublicPlaytime extends JavaPlugin {
         PlaytimeDatabase.get().options().setHeader(headerComment);
         PlaytimeDatabase.get().options().copyDefaults(true);
         PlaytimeDatabase.save();
+
+        //Backup initializer
+        PlaytimeDatabaseBackup.setup();
+        ArrayList<String> headerCommentBackup = new ArrayList<String>();
+        headerCommentBackup.add("Backed up values will be stored here once backup as been run. Do not edit unless you know what you are doing!");
+        PlaytimeDatabaseBackup.get().options().setHeader(headerCommentBackup);
+        PlaytimeDatabaseBackup.get().options().copyDefaults(true);
+        PlaytimeDatabaseBackup.save();
 
         //Config
         getConfig().options().copyDefaults();

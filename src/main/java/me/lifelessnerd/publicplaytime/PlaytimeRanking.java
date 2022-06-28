@@ -1,7 +1,7 @@
 package me.lifelessnerd.publicplaytime;
 
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
-import me.lifelessnerd.publicplaytime.commands.GetPlaytime;
+import me.lifelessnerd.publicplaytime.commands.legacy.GetPlaytime;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;

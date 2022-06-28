@@ -22,12 +22,15 @@ public class CommandManager implements TabExecutor {
         subcommands.add(new PlaytimeScoreboardCommand(plugin));
         subcommands.add(new PlaytimeHelpCommand(subcommands, plugin));
         subcommands.add(new PlaytimeAboutCommand(plugin));
+        subcommands.add(new PlaytimeBackupCommand(plugin));
+        subcommands.add(new PlaytimeBackupLoadCommand(plugin));
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player)){
+            sender.sendMessage("The console cannot perform PublicPlaytime commands.");
             return false;
         }
         Player player = (Player) sender;

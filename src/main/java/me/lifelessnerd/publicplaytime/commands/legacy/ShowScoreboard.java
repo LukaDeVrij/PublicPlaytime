@@ -1,4 +1,4 @@
-package me.lifelessnerd.publicplaytime.commands;
+package me.lifelessnerd.publicplaytime.commands.legacy;
 
 import me.lifelessnerd.publicplaytime.PlaytimeRanking;
 import me.lifelessnerd.publicplaytime.PublicPlaytime;

@@ -1,4 +1,4 @@
-package me.lifelessnerd.publicplaytime.commands;
+package me.lifelessnerd.publicplaytime.commands.legacy;
 
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import org.bukkit.Bukkit;
