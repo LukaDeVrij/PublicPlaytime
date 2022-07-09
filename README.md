@@ -1,12 +1,12 @@
 ![enter image description here](https://i.imgur.com/YcSSgNX.png)
 # PublicPlaytime 
 
-PublicPlaytime is a plugin which makes it easy to see playtimes of every player who has ever been on your server. PublicPlaytime uses the standard Statistic from Bukkit* to query the playtime of online players, and a database which holds the time for all offline players. The time played is of course how long a certain player has been logged in on your server. It should be the same as the statistic in vanilla Minecraft that people can access via the statistics menu. **This also means, that when you switch the main world of your server, the playtime will be reset.**
+PublicPlaytime is a plugin which makes it easy to see playtimes of every player who has ever been on your server. PublicPlaytime uses the standard Statistic from Bukkit* to query the playtime of online players, and a database which holds the time for all offline players. The time played is of course how long a certain player has been logged in on your server. It should be the same as the statistic in vanilla Minecraft that people can access via the statistics menu. **This also means, that when you switch the main world of your server, the playtime will be reset.** To prevent this from happening, use the backup feature that is explained further below.
 
 *Any forks of Bukkit will suffice (i.e. Spigot, Paper etc.)
 
 ## Commands
-PublicPlaytime several functions.
+PublicPlaytime has several functions. All commands can be seen in-game via _/playtime help_, aliases can also be found here.
 
 * **/playtime get \<player> \<outputMode>** 
 	* Gets the playtime for that specific player in a certain format
@@ -46,13 +46,20 @@ Output when executing: */playtime scoreboard show minutes 10*
 * **/playtime about**
 	* Shows information about the plugin, where to find it and more.
 
+* **/playtime backup**
+	* Saves the current playtimes into a file. This will overwrite a previous backup.
+
+* **/playtime load**
+	* Loads playtimes from the backup file, and sets all playtimes equal to those of the backup. This will overwrite old playtimes. This feature is handy when transferring main worlds, as this resets playtimes. To carry the playtimes over, backup the old playtimes in the old world, change worlds, then load them.
+
 ## Files 
 Upon first starting the plugin, 2 YAML files will be created, a config and a database. The config will hold options for the plugin for you to edit. There are 2 settings that can be changed, whether to allow scoreboards to refresh, and if so, at what interval they should do so. Anything below 20 ticks (1 second) will not have an effect, since the statistics themselves are done with seconds.
 
 The database is not to be edited. It stores playtimes as ticks per player. You can add players, although this is already done by the plugin when people first join, and any values will get overwritten when a player quits the server. 
 
+A backup file is present if a backup is made with /playtime backup. You may edit this file (although I dicourage you from doing it) but notice that when you do this, to load the backup file, first reload/restart the server for the plugin to see the manual changes you've made.
+
 ## Upcoming feature(s) (hopefully) 
-- Ways to carry over data from old worlds to new worlds
 - PlaceholderAPI support
 
 ## Known issues
