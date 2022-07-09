@@ -29,6 +29,11 @@ public class PlaytimeBackupLoadCommand extends Subcommand {
     }
 
     @Override
+    public String[] getAliases() {
+        return new String[] {"loadbackup"};
+    }
+
+    @Override
     public String getDescription() {
         return "Loads the playtimes from the backup file. Overwrites current data.";
     }

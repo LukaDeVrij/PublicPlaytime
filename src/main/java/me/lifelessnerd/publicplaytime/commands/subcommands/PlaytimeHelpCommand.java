@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlaytimeHelpCommand extends Subcommand {
 
@@ -20,6 +21,11 @@ public class PlaytimeHelpCommand extends Subcommand {
     @Override
     public String getName() {
         return "help";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[] {};
     }
 
     @Override
@@ -40,6 +46,7 @@ public class PlaytimeHelpCommand extends Subcommand {
         for (int i = 0; i < subcommands.size(); i++){
             message = "&6- /playtime " + subcommands.get(i).getName() + " : &r" + subcommands.get(i).getDescription();
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', message + "\n&7Usage: " + subcommands.get(i).getSyntax()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Aliases: " + Arrays.toString(subcommands.get(i).getAliases())));
         }
         return true;
     }

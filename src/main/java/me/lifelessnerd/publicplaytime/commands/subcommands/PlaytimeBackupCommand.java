@@ -32,6 +32,11 @@ public class PlaytimeBackupCommand extends Subcommand {
     }
 
     @Override
+    public String[] getAliases() {
+        return new String[] {"save"};
+    }
+
+    @Override
     public String getDescription() {
         return "Writes a backup file of the playtime at the current moment";
     }

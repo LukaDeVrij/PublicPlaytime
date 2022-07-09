@@ -17,6 +17,11 @@ public class PlaytimeRankingCommand extends Subcommand {
     }
 
     @Override
+    public String[] getAliases() {
+        return new String[] {"lb", "leaderboard", "rankings"};
+    }
+
+    @Override
     public String getDescription() {
         return "Returns a ranked leaderboard in chat.";
     }

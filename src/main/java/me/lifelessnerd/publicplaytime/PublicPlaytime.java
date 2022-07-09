@@ -51,7 +51,8 @@ public final class PublicPlaytime extends JavaPlugin {
         //Backup initializer
         PlaytimeDatabaseBackup.setup();
         ArrayList<String> headerCommentBackup = new ArrayList<String>();
-        headerCommentBackup.add("Backed up values will be stored here once backup as been run. Do not edit unless you know what you are doing!");
+        headerCommentBackup.add("Backed up values will be stored here once backup has been run. Only edit if you know what you are doing.");
+        headerCommentBackup.add("Please know that when editing this manually, for the plugin to see any effect you must restart/reload the server!");
         PlaytimeDatabaseBackup.get().options().setHeader(headerCommentBackup);
         PlaytimeDatabaseBackup.get().options().copyDefaults(true);
         PlaytimeDatabaseBackup.save();

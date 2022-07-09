@@ -36,6 +36,11 @@ public class PlaytimeScoreboardCommand extends Subcommand {
     }
 
     @Override
+    public String[] getAliases() {
+        return new String[] {"sb"};
+    }
+
+    @Override
     public String getDescription() {
         return "Show or hide the scoreboard.";
     }

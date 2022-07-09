@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandManager implements TabExecutor {
@@ -40,14 +41,23 @@ public class CommandManager implements TabExecutor {
             return false;
         }
 
+        //Check for names of subcommands in arg
         for (int i = 0; i < getSubcommands().size(); i++){
-
             if (args[0].equalsIgnoreCase(getSubcommands().get(i).getName())){
                 boolean result = getSubcommands().get(i).perform(player, args);
                 return true; // All help dialogs are done in-class with player.sendMessage
             }
-
         }
+        //Check for aliases of subcommands in arg
+        for (int i = 0; i < getSubcommands().size(); i++) {
+            if (Arrays.asList(getSubcommands().get(i).getAliases()).contains(args[0])) {
+//                player.sendMessage("Alias used.");
+                boolean result = getSubcommands().get(i).perform(player, args);
+                return true; // All help dialogs are done in-class with player.sendMessage
+            }
+        }
+
+
         player.sendMessage(args[0] + " is not a valid sub-command."); //TODO: Add all options in a message same as above
         return false;
 

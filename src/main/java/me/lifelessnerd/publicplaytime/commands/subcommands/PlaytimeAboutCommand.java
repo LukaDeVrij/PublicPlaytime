@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class PlaytimeAboutCommand extends Subcommand {
@@ -19,6 +20,11 @@ public class PlaytimeAboutCommand extends Subcommand {
     @Override
     public String getName() {
         return "about";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[] {"info", "version"};
     }
 
     @Override
@@ -36,7 +42,7 @@ public class PlaytimeAboutCommand extends Subcommand {
 
         String message =
         """       
-        &bPublicPlaytime - version 1.1
+        &bPublicPlaytime - version 1.2
         &6SpigotMC: &ohttps://bit.ly/PublicPlaytimeSpigotMC
         &6Github: &ohttps://github.com/LifelessNerd/PublicPlaytime
         &6Developer: &ohttps://twitter.com/NerdLifeless

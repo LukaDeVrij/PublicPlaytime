@@ -18,6 +18,11 @@ public class PlaytimeGetCommand extends Subcommand {
     }
 
     @Override
+    public String[] getAliases() {
+        return new String[] {"playtime"};
+    }
+
+    @Override
     public String getDescription() {
         return "Gets the playtime of the provided player.";
     }

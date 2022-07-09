@@ -2,9 +2,13 @@ package me.lifelessnerd.publicplaytime.commands;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 public abstract class Subcommand {
 
     public abstract String getName();
+
+    public abstract String[] getAliases();
 
     public abstract String getDescription();
 
