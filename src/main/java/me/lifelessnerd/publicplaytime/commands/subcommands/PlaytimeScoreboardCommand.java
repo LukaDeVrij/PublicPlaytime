@@ -115,7 +115,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
             if (plugin.getConfig().getBoolean("scoreboardRefreshAllowed")){
 
                 int period = plugin.getConfig().getInt("scoreboardRefreshInterval");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7The scoreboard will be refreshed every " + period / 20f + " seconds. To cancel, hide the scoreboard."));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7The scoreboard will be refreshed every " + period / 20f + " seconds. To cancel, hide the scoreboard using &o/playtime scoreboard hide"));
                 logger.warning("The scoreboard will be refreshed every " + period / 20f + " seconds. This may cause performance to decrease. To see options regarding this feature, see config.yml!");
                 try{
                     refreshScoreboard.cancel();
