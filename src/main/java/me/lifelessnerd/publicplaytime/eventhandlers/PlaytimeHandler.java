@@ -21,10 +21,10 @@ public class PlaytimeHandler implements Listener {
         try{
             int currentValue = Integer.parseInt(PlaytimeDatabase.get().getString(player.getName()));
         }catch(Exception exception){
-            Bukkit.getLogger().warning("Joined player was not in database: adding entry");
+            Bukkit.getLogger().info("Joined player was not in database: adding entry");
             FileConfiguration fileConfig = PlaytimeDatabase.get();
             fileConfig.set(player.getName(), 0);
-            Bukkit.getLogger().warning("Player was added, with value 0");
+            Bukkit.getLogger().info("Player was added, with value 0");
             PlaytimeDatabase.save();
         }
 
@@ -38,7 +38,7 @@ public class PlaytimeHandler implements Listener {
         FileConfiguration fileConfiguration = PlaytimeDatabase.get();
         fileConfiguration.set(player.getName(), timeStat);
         PlaytimeDatabase.save();
-        Bukkit.getLogger().warning( "Debug: player " + player + " was saved with value " + timeStat);
+        Bukkit.getLogger().info( "Debug: player " + player + " was saved with value " + timeStat);
 
     }
 

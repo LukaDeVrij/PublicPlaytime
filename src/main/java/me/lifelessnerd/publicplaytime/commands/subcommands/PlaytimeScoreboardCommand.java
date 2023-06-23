@@ -8,7 +8,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -85,12 +87,20 @@ public class PlaytimeScoreboardCommand extends Subcommand {
 //        Player player = (Player) sender;
 
         ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard scoreboard = manager.getNewScoreboard();
+        Scoreboard scoreboard = manager.getMainScoreboard();
         TextComponent component = Component.text("Time Played");
-        Objective objective = scoreboard.registerNewObjective("Time Played", "dummy", component);
+        Objective objective;
+        try {
+            objective = scoreboard.registerNewObjective("Time Played", "dummy", component);
+        } catch (Exception e){
+            objective = scoreboard.getObjective("Time Played");
+        }
 
 
         if (args[1].equalsIgnoreCase("show")){
+
+            Objective prevObjective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
 
             objective = scoreboard.getObjective("Time Played");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -134,10 +144,15 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 refreshScoreboard.cancel();
             } catch(Exception ignored) {
             }
-            objective.unregister();
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden."));
-
+//            objective.unregister();
+            String prevObjectiveName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING);
+            try {
+                Objective originalObjective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(prevObjectiveName);
+                originalObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. Your old scoreboard was put back."));
+            } catch (Exception e){
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. There was no old scoreboard to show."));
+            }
             return true;
         }
         else {
