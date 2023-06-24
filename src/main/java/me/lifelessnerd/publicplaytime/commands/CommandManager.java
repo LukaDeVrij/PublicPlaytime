@@ -31,7 +31,7 @@ public class CommandManager implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player)){
-            sender.sendMessage("The console cannot perform PublicPlaytime commands.");
+            sender.sendMessage("The console cannot perform PublicPlaytime commands."); //TODO what effects would it have if we allow this? (aka remove this check)
             return false;
         }
         Player player = (Player) sender;

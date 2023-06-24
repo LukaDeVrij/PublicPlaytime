@@ -28,6 +28,10 @@ public class PlaytimeHandler implements Listener {
             PlaytimeDatabase.save();
         }
 
+        //TODO: check if currentValue differs from player.getStatistic; if so, there was a world change and we might
+        // wanna warn the console of world changes; and maybe paste the old value in console so that there is some sort
+        // of backup?
+
     }
 
     @EventHandler
