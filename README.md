@@ -65,4 +65,4 @@ A backup file is present if a backup is made with /playtime backup. You may edit
 ## Known issues
 Currently no known issues.
 
-If there are any problems, create a message below, add them on GitHub, [here](https://github.com/LifelessNerd/PublicPlaytime/issues/new), or DM me on [Twitter](https://twitter.com/nerdlifeless).
+If there are any problems, create a message below, add them on GitHub, [here](https://github.com/LifelessNerd/PublicPlaytime/issues/new), or DM me on [Twitter](https://twitter.com/lukadevrij).
