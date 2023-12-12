@@ -63,6 +63,6 @@ A backup file is present if a backup is made with /playtime backup. You may edit
 - PlaceholderAPI support
 
 ## Known issues
-Currently no known issues.
+Issues can be found [here](https://github.com/LifelessNerd/PublicPlaytime/issues/).
 
 If there are any problems, create a message below, add them on GitHub, [here](https://github.com/LifelessNerd/PublicPlaytime/issues/new), or DM me on [Twitter](https://twitter.com/lukadevrij).
