@@ -100,7 +100,12 @@ public class PlaytimeScoreboardCommand extends Subcommand {
         if (args[1].equalsIgnoreCase("show")){
 
             Objective prevObjective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-            player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
+            if (prevObjective != null){
+                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
+            } else {
+                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, "none");
+            }
+
 
             objective = scoreboard.getObjective("Time Played");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -144,15 +149,19 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 refreshScoreboard.cancel();
             } catch(Exception ignored) {
             }
-//            objective.unregister();
+
+
             String prevObjectiveName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING);
-            try {
+            if (!(prevObjectiveName.equals("none"))){
                 Objective originalObjective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(prevObjectiveName);
                 originalObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. Your old scoreboard was put back."));
-            } catch (Exception e){
+            } else {
+                Bukkit.getScoreboardManager().getMainScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+                Bukkit.getScoreboardManager().getMainScoreboard().getObjective("Time Played").unregister();
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. There was no old scoreboard to show."));
             }
+
             return true;
         }
         else {

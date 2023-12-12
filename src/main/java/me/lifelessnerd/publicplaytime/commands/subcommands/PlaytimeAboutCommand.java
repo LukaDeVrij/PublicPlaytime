@@ -42,10 +42,10 @@ public class PlaytimeAboutCommand extends Subcommand {
 
         String message =
         """       
-        &bPublicPlaytime - version 1.2
+        &bPublicPlaytime - version 1.2.2
         &6SpigotMC: &ohttps://bit.ly/PublicPlaytimeSpigotMC
         &6Github: &ohttps://github.com/LifelessNerd/PublicPlaytime
-        &6Developer: &ohttps://twitter.com/NerdLifeless
+        &6Developer: &ohttps://twitter.com/LukaDeVrij
         &rIf you have any problems, bugs or glitches, reach out to me via any of the links above.
         """;
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
