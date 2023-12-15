@@ -87,7 +87,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
 //        Player player = (Player) sender;
 
         ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard scoreboard = manager.getMainScoreboard();
+        Scoreboard scoreboard = manager.getNewScoreboard();
         TextComponent component = Component.text("Time Played");
         Objective objective;
         try {
@@ -98,32 +98,25 @@ public class PlaytimeScoreboardCommand extends Subcommand {
 
 
         if (args[1].equalsIgnoreCase("show")){
-
-            Objective prevObjective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-            if (prevObjective != null){
-                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
-            } else {
-                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, "none");
-            }
-
-
-            objective = scoreboard.getObjective("Time Played");
+//            Objective prevObjective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+//            if (prevObjective != null){
+//                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
+//            } else {
+//                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, "none");
+//            }
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
 
             int maxAmount = 10;
             try{
                 maxAmount = Integer.parseInt(args[3]);
-            }catch(Exception exception){
-                maxAmount = 10;
-            }
+            }catch(Exception ignored){}
 
             PlaytimeRanking playtimeRanking = new PlaytimeRanking();
             HashSet<String> playerList = playtimeRanking.getPlayerNames();
-            HashMap<String, String> rankedList = playtimeRanking.getRanking(playerList, maxAmount, outputMode);
+            playtimeRanking.getRanking(playerList, maxAmount, outputMode);
 
             //Task one time execution to create the scoreboard
-            BukkitTask createScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount).runTask(plugin);
+            refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount).runTask(plugin);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard shown."));
 
             //Refresh
@@ -134,7 +127,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 logger.warning("The scoreboard will be refreshed every " + period / 20f + " seconds. This may cause performance to decrease. To see options regarding this feature, see config.yml!");
                 try{
                     refreshScoreboard.cancel();
-                }catch(Exception exception){}
+                }catch(Exception ignored){}
                 refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount).runTaskTimer(plugin, 0L, period);
             }
             else {
@@ -149,18 +142,17 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 refreshScoreboard.cancel();
             } catch(Exception ignored) {
             }
-
-
-            String prevObjectiveName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING);
-            if (!(prevObjectiveName.equals("none"))){
-                Objective originalObjective = Bukkit.getScoreboardManager().getMainScoreboard().getObjective(prevObjectiveName);
-                originalObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. Your old scoreboard was put back."));
-            } else {
-                Bukkit.getScoreboardManager().getMainScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-                Bukkit.getScoreboardManager().getMainScoreboard().getObjective("Time Played").unregister();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. There was no old scoreboard to show."));
-            }
+//            String prevObjectiveName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING);
+//            if (!(prevObjectiveName.equals("none"))){
+//                Objective originalObjective = scoreboard.getObjective(prevObjectiveName);
+//                originalObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+//                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. Your old scoreboard was put back."));
+//            } else {
+//                scoreboard.clearSlot(DisplaySlot.SIDEBAR);
+//                scoreboard.getObjective("Time Played").unregister();
+//                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. There was no old scoreboard to show."));
+//            }
+            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 
             return true;
         }
