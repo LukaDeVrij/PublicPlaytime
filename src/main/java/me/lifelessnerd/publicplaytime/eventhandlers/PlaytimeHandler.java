@@ -36,10 +36,10 @@ public class PlaytimeHandler implements Listener {
         // of backup for that player
         int serverPlayTime = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         if (Math.abs(currentValue - serverPlayTime) >= 100){ // difference is more than 5 seconds? Something is going on!
-            Bukkit.getLogger().log(Level.WARNING, "There was a substantial difference in playtime between server and plugin! " +
-                "Server records show player " + player.getName() + " has playtime of " + serverPlayTime + ", while the plugin" +
-                " has the value of " + currentValue + "! Perhaps a world change has occurred. Please run a backup to preserve playtimes." +
-                "\nNeed help? Run /playtime help.");
+//            Bukkit.getLogger().log(Level.WARNING, "There was a substantial difference in playtime between server and plugin! " +
+//                "Server records show player " + player.getName() + " has playtime of " + serverPlayTime + ", while the plugin" +
+//                " has the value of " + currentValue + "! Perhaps a world change has occurred. Please run a backup to preserve playtimes." +
+//                "\nNeed help? Run /playtime help.");
         }
 
     }
