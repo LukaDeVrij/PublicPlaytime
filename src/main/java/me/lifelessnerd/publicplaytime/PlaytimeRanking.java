@@ -67,7 +67,7 @@ public class PlaytimeRanking {
 
 
                 }catch(Exception exception2){
-                    System.out.println("Something went seriously wrong! Contact dev!");
+                    System.out.println("Something went seriously wrong! Contact dev - /playtime info !");
                     System.out.println(exception2.getMessage());
 
                 }

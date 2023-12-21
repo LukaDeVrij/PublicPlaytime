@@ -4,6 +4,10 @@ import me.lifelessnerd.publicplaytime.commands.CommandManager;
 import me.lifelessnerd.publicplaytime.eventhandlers.PlaytimeHandler;
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabaseBackup;
+import org.bukkit.Bukkit;
+import org.bukkit.Statistic;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ public final class PublicPlaytime extends JavaPlugin {
         //Boilerplate
         log = getLogger();
         log.info("PublicPlaytime plugin started!");
-        getServer().getPluginManager().registerEvents(new PlaytimeHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlaytimeHandler(this), this);
 
         getCommand("playtime").setExecutor(new CommandManager(this));
 
@@ -60,6 +64,16 @@ public final class PublicPlaytime extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+
+        // If server is stopped, make sure every playtime is updated (onQuit is never called in this case)
+        for (Player player : Bukkit.getOnlinePlayers()){
+            long timeStat =  player.getStatistic(Statistic.PLAY_ONE_MINUTE);
+            FileConfiguration fileConfiguration = PlaytimeDatabase.get();
+            fileConfiguration.set(player.getName(), timeStat);
+            PlaytimeDatabase.save();
+            getLogger().info( "Player " + player.getName() + " was saved with value " + timeStat);
+        }
+
 
     }
 }
