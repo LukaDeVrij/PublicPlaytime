@@ -42,7 +42,7 @@ public class PlaytimeAboutCommand extends Subcommand {
 
         String message =
         """       
-        &bPublicPlaytime - version 1.2.3
+        &bPublicPlaytime - version 1.2.4
         &6SpigotMC: &ohttps://bit.ly/PublicPlaytimeSpigotMC
         &6Discord Support: &ohttps://discord.gg/8n65jSEkVf
         &6Github: &ohttps://github.com/LifelessNerd/PublicPlaytime
