@@ -44,7 +44,7 @@ public class PlaytimeHandler implements Listener {
                 "Server records show player " + player.getName() + " has playtime of " + serverPlayTime + ", while the plugin" +
                 " has the value of " + currentValue + "! Perhaps a world change has occurred. If so, values from other players " +
                 "are still accurate and you should probably run /playtimes backup!" +
-                "\nNeed help? Run /playtime help.");
+                "\nNeed help? Run /playtime help or /playtime info.");
         }
 
     }
