@@ -3,3 +3,7 @@ scoreboardRefreshAllowed: true
 # If scoreboardRefreshAllowed is true, the interval at which the scoreboard will refresh, in ticks (20 ticks = 1 second)
 # I would recommend not setting this too low, as it affects performance
 scoreboardRefreshInterval: 1200
+# Automatically show scoreboard when player joins
+onJoinScoreboardEnabled: true
+# Parameters to the scoreboard show command (this will be concatenated after /playtime scoreboard show)
+onJoinScoreboardCommand: minutes 10

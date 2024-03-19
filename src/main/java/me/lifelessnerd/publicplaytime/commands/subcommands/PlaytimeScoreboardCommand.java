@@ -6,6 +6,7 @@ import me.lifelessnerd.publicplaytime.commands.Subcommand;
 import me.lifelessnerd.publicplaytime.tasks.RefreshScoreboard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -69,7 +70,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
             sender.sendMessage(getSyntax());
             return false;
         }
-        String outputMode = "hours";
+        String outputMode;
         try{
             outputMode = args[2];
             if (outputMode.equalsIgnoreCase("ticks") | outputMode.equalsIgnoreCase("minutes") |
@@ -78,13 +79,14 @@ public class PlaytimeScoreboardCommand extends Subcommand {
             }
             else {
                 outputMode = "hours";
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Your output mode was not recognised. Using hours."));
+                if (!args[1].equalsIgnoreCase("hide")){ // TODO temp fix really
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Your output mode was not recognised. Using hours."));
+                }
             }
         }catch(Exception exception){
             outputMode = "hours";
         }
 
-//        Player player = (Player) sender;
 
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
@@ -96,14 +98,19 @@ public class PlaytimeScoreboardCommand extends Subcommand {
             objective = scoreboard.getObjective("Time Played");
         }
 
+        boolean globalSetting = false;
+        if (Arrays.asList(args).contains("-global")){
+            if (player.hasPermission("publicplaytime.admin")){
+                globalSetting = true;
+            } else {
+                player.sendMessage(Component.text("-global").color(NamedTextColor.RED)
+                .append(Component.text(" was ignored; you do not have permission!").color(NamedTextColor.GRAY)));
+            }
+        }
+
 
         if (args[1].equalsIgnoreCase("show")){
-//            Objective prevObjective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-//            if (prevObjective != null){
-//                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, prevObjective.getName());
-//            } else {
-//                player.getPersistentDataContainer().set(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING, "none");
-//            }
+
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
             int maxAmount = 10;
@@ -116,7 +123,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
             playtimeRanking.getRanking(playerList, maxAmount, outputMode);
 
             //Task one time execution to create the scoreboard
-            refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount).runTask(plugin);
+            refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount, globalSetting).runTask(plugin);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard shown."));
 
             //Refresh
@@ -128,7 +135,7 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 try{
                     refreshScoreboard.cancel();
                 }catch(Exception ignored){}
-                refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount).runTaskTimer(plugin, 0L, period);
+                refreshScoreboard = new RefreshScoreboard(plugin, scoreboard, player, objective, outputMode, maxAmount, globalSetting).runTaskTimer(plugin, 0L, period);
             }
             else {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cNote that scoreboard refreshing is disabled by your administrator. To update the scoreboard, repeat the command."));
@@ -142,17 +149,14 @@ public class PlaytimeScoreboardCommand extends Subcommand {
                 refreshScoreboard.cancel();
             } catch(Exception ignored) {
             }
-//            String prevObjectiveName = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "prevObjective"), PersistentDataType.STRING);
-//            if (!(prevObjectiveName.equals("none"))){
-//                Objective originalObjective = scoreboard.getObjective(prevObjectiveName);
-//                originalObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-//                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. Your old scoreboard was put back."));
-//            } else {
-//                scoreboard.clearSlot(DisplaySlot.SIDEBAR);
-//                scoreboard.getObjective("Time Played").unregister();
-//                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aScoreboard hidden. There was no old scoreboard to show."));
-//            }
-            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+
+            if (globalSetting){
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    onlinePlayer.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+                }
+            } else {
+                player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+            }
 
             return true;
         }

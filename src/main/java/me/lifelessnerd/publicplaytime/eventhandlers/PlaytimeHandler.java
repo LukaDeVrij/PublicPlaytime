@@ -1,6 +1,7 @@
 package me.lifelessnerd.publicplaytime.eventhandlers;
 
 import me.lifelessnerd.publicplaytime.filehandlers.PlaytimeDatabase;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -35,7 +36,7 @@ public class PlaytimeHandler implements Listener {
             PlaytimeDatabase.save();
         }
 
-        //checks if currentValue differs from player.getStatistic; if so, there was a world change and we
+        // checks if currentValue differs from player.getStatistic; if so, there was a world change and we
         // warn the console of world changes; and paste the old value in console so that there is some sort
         // of backup for that player
         int serverPlayTime = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
@@ -45,6 +46,11 @@ public class PlaytimeHandler implements Listener {
                 " has the value of " + currentValue + "! Perhaps a world change has occurred. If so, values from other players " +
                 "are still accurate and you should probably run /playtimes backup!" +
                 "\nNeed help? Run /playtime help or /playtime info.");
+        }
+
+        // Automatically show scoreboard to players on join
+        if (plugin.getConfig().getBoolean("onJoinScoreboardEnabled")){
+            player.performCommand("playtime scoreboard show " + plugin.getConfig().getString("onJoinScoreboardCommand"));
         }
 
     }
