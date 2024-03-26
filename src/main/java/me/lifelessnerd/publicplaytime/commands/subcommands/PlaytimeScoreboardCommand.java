@@ -99,11 +99,11 @@ public class PlaytimeScoreboardCommand extends Subcommand {
         }
 
         boolean globalSetting = false;
-        if (Arrays.asList(args).contains("-global")){
+        if (Arrays.asList(args).contains("global")){
             if (player.hasPermission("publicplaytime.admin")){
                 globalSetting = true;
             } else {
-                player.sendMessage(Component.text("-global").color(NamedTextColor.RED)
+                player.sendMessage(Component.text("global").color(NamedTextColor.RED)
                 .append(Component.text(" was ignored; you do not have permission!").color(NamedTextColor.GRAY)));
             }
         }
