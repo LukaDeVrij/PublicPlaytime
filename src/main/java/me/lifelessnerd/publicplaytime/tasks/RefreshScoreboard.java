@@ -1,6 +1,7 @@
 package me.lifelessnerd.publicplaytime.tasks;
 
 import me.lifelessnerd.publicplaytime.PlaytimeRanking;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,8 +22,9 @@ public class RefreshScoreboard extends BukkitRunnable {
     Objective objective;
     String outputMode;
     int maxAmount;
+    boolean global;
 
-    public RefreshScoreboard(JavaPlugin plugin, Scoreboard scoreboard, Player player, Objective objective, String outputMode, int maxAmount) {
+    public RefreshScoreboard(JavaPlugin plugin, Scoreboard scoreboard, Player player, Objective objective, String outputMode, int maxAmount, boolean global) {
         this.plugin = plugin;
         this.rankedList = rankedList;
         this.scoreboard = scoreboard;
@@ -30,6 +32,7 @@ public class RefreshScoreboard extends BukkitRunnable {
         this.objective = objective;
         this.outputMode = outputMode;
         this.maxAmount = maxAmount;
+        this.global = global;
     }
 
     @Override
@@ -60,8 +63,14 @@ public class RefreshScoreboard extends BukkitRunnable {
         outputModeString.setCharAt(0, capitalOfOutput);
 
         objective.setDisplayName(outputModeString + " Played");
-        player.setScoreboard(scoreboard);
 
+        if(global){
+            for (Player player : Bukkit.getOnlinePlayers()  ) {
+                player.setScoreboard(scoreboard);
+            }
+        } else {
+            player.setScoreboard(scoreboard);
+        }
 
     }
 }
